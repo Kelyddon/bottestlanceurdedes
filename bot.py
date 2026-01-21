@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 from main import DiceRoller
-from tablelancerdedes import afficher_5_derniers_lancers
 import os
 
 intents = discord.Intents.default()
@@ -59,37 +58,13 @@ async def historique(ctx, qui: str = None):
     if not qui or qui.strip() == "":
         await ctx.send("Mauvaise commande. Utilise `/historique me` ou `/historique pseudo`.")
         return
-    import io
-    import sys
     hist = roller.get_history()
     if not hist:
         await ctx.send("Aucun lancer de dés enregistré pour le moment.")
         return
-    old_stdout = sys.stdout
-    sys.stdout = mystdout = io.StringIO()
-    # Affiche l'historique d'un utilisateur spécifique
+    from tablelancerdedes import format_5_derniers_lancers
     pseudo = str(ctx.author.display_name) if qui.lower() == "me" else qui
-    from collections import defaultdict
-    lancers_par_joueur = defaultdict(list)
-    for entry in hist:
-        try:
-            p = entry.split('|')[1].split(' a lancé')[0].strip()
-        except Exception:
-            continue
-        lancers_par_joueur[p].append(entry)
-    if pseudo not in lancers_par_joueur:
-        print(f"Aucun lancer trouvé pour {pseudo}.")
-    else:
-        print(f"--- {pseudo} ---")
-        for lancer in lancers_par_joueur[pseudo][-5:]:
-            try:
-                date, reste = lancer.split('|', 1)
-                reste = reste.strip()
-                print(f"{date.strip()} : {reste}\n")
-            except Exception:
-                print(lancer + "\n")
-    sys.stdout = old_stdout
-    msg = mystdout.getvalue()
+    msg = format_5_derniers_lancers(hist, pseudo)
     # Discord limite à 2000 caractères par message
     if len(msg) <= 1990:
         await ctx.send(f"```{msg}```")

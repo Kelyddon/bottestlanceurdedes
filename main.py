@@ -1,5 +1,8 @@
 import unicodedata
-from tablelancerdedes import afficher_5_derniers_lancers
+from tablelancerdedes import format_5_derniers_lancers
+import random
+import re
+from datetime import datetime
 
 class DiceRoller:
     def __init__(self):
@@ -38,7 +41,8 @@ def main():
             break
         if cmd.lower() == 'h':
             print("\n--- 5 derniers lancers par utilisateur ---")
-            afficher_5_derniers_lancers(roller.get_history())
+            from tablelancerdedes import format_5_derniers_lancers
+            print(format_5_derniers_lancers(roller.get_history()))
             print("------------------------------------------\n")
             continue
         result, _ = roller.roll(cmd, joueur)
@@ -46,12 +50,6 @@ def main():
             print(result)
         else:
             print("Commande invalide. Essayez : /1dés100 ou /2dés6 ...")
-
-
-import random
-import re
-from datetime import datetime
-
 
 if __name__ == "__main__":
     main()

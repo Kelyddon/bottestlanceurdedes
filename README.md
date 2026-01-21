@@ -9,6 +9,16 @@ $env:DISCORD_TOKEN="votre_token_ici"
 python demo/test/bot.py
 ```
 
+## Animation de chargement (GIF)
+
+Lors d'un lancer de dés, le bot affiche une animation GIF pendant 6 secondes avant de donner le résultat.
+
+**Personnaliser le GIF :**
+- Uploade ton GIF dans un salon Discord (même privé).
+- Clique droit sur le GIF envoyé > "Copier le lien".
+- Remplace l'URL dans le code bot.py (`gif_url = ...`) par ce lien Discord (commence par `https://cdn.discordapp.com/attachments/...`).
+- Ce lien Discord CDN garantit un affichage rapide et fiable pour tous les membres du serveur.
+
 ## Commandes disponibles
 
 - `/aide LanceurDeDes`  

@@ -25,7 +25,15 @@ async def des(ctx, *, arg):
     if nb < 1 or nb > 20 or faces < 2 or faces > 1000:
         await ctx.send("Limite : 1 à 20 dés, 2 à 1000 faces par dé.")
         return
+    # Envoie un GIF d'attente
+    gif_url = "https://cdn.discordapp.com/attachments/1463498955026468874/1463499986288382128/teamwahoo-don-quixote.gif"
+    embed = discord.Embed(title="Lancement des dés...")
+    embed.set_image(url=gif_url)
+    wait_msg = await ctx.send(embed=embed)
+    import asyncio
+    await asyncio.sleep(6)
     result, _ = roller.roll(f"/{arg}", str(ctx.author.display_name))
+    await wait_msg.delete()
     if result:
         await ctx.send(result)
     else:

@@ -46,7 +46,6 @@ async def moyenne(ctx, *, arg):
     # Extraction du pseudo et du nombre de faces depuis l'argument utilisateur
     m = re.match(r"(.+) *des(\d+)", arg.strip(), re.IGNORECASE)
     if not m:
-        await ctx.send("Commande invalide. Exemple : /moyenne Alice des6")
         return
     pseudo = m.group(1).strip()
     faces = int(m.group(2))
